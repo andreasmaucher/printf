@@ -17,7 +17,9 @@
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
+int ft_printf(const char *format, ...);
 void	ft_putstr(char *str);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);

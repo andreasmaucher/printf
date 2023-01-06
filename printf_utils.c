@@ -12,7 +12,7 @@
 
 #include "printf.h"
 
-void	ft_putstr(char *str)
+void	ft_putstr(const char *str) //normally not const!
 {
 	int	pos;
 

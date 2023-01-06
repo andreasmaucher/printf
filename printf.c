@@ -12,34 +12,35 @@
 
 #include "printf.h"
 
-int	ft_formatspecifier(const char *format, int i) //, va_list args
+int	ft_formatspecifier(va_list args, const char format)	// this is correct
 {
-	while(format[i] != '\0') // = c
-	{
-		write(1, &format[i], 1);
-		i++;
-	}
-	return(0);
+	if (format[i] == 's') // = c
+		ft_printstr(va_arg(args, char *); // this is correct
+	return (0);
 }
 
 int ft_printf(const char *format, ...)
 {
 	va_list args; // variable capable of storing a variable-length argument list
+	int	i;
 
 	va_start(args, format); // initializes the list
-	int	i;
 	i = 0;
 		while (format[i] != '\0') // this moves automatically forward in the string
 		{
 			if(format[i] == '%')
 			{
 				i++; // to arrive at the next char
-				ft_formatspecifier(format, i); //args
+				ft_formatspecifier(args, format[i]); //this is correct!
 			}
 			//char write_string = (const char) va_arg(args, int); //va_arg returns the next argument in the list
 			//printf("%c", format[i]);
 			//i++;
-			else if it is a character print it
+			else if (format[i] >= 'a' && format[i] <= 'z')
+				{
+					write(1, &format[i], 1);
+					i++;
+				}
 		}
 	va_end(args); //cleans up the variable argument list (variable with type va_list)
 	return (0);
@@ -50,7 +51,7 @@ int main()
 	char	str[] = "%sHello";
 	char	two[] = "%sbye";
 
-	ft_printf(str,two);
+	ft_printf(str,two); // test results with library printf function
 }
 
 /*

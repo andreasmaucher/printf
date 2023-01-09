@@ -10,6 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+//TODO: maybe I need to reference libft Makefile here
+
 SRCS = printf.c printf_utils.c \
 
 OBJS = $(SRCS:.c=.o)

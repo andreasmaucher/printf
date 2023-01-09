@@ -12,35 +12,62 @@
 
 #include "printf.h"
 
+//** NOTE: printf returns the numbers of characters that are printed
+
+int	ft_printchar(char c) //? does this work for numbers as well?
+{
+	int nret;
+	
+	nret = 0;
+	write(1, &c, 1);
+	nret++;
+	return (nret);
+}
+int	ft_printstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	return(i);
+}
+
 int	ft_formatspecifier(va_list args, const char format)	// this is correct
 {
-	if (format[i] == 's') //* = c
-		ft_printstr(va_arg(args, char *); // this is correct
-	return (0);
+	int nret;
+
+	nret = 0;
+	if (format == 's') //* = c
+		nret += ft_printstr(va_arg(args, char *)); // this is correct
+	return (nret);
 }
-//TODO
+
 int ft_printf(const char *format, ...)
 {
-	va_list args; //! variable capable of storing a variable-length argument list
+	va_list args; // variable capable of storing a variable-length argument list
 	int	i;
+	int nret;
 
 	va_start(args, format); //** initializes the list
 	i = 0;
+	nret = 0;
 		while (format[i] != '\0') // this moves automatically forward in the string
 		{
 			if(format[i] == '%')
 			{
 				i++; // to arrive at the next char
-				ft_formatspecifier(args, format[i]); //this is correct!
+				nret += ft_formatspecifier(args, format[i]); //this is correct!
+				i++;
 			}
-			//char write_string = (const char) va_arg(args, int); //va_arg returns the next argument in the list
-			//printf("%c", format[i]);
-			//i++;
-			else if (format[i] >= 'a' && format[i] <= 'z')
-				{
-					write(1, &format[i], 1);
-					i++;
-				}
+			else
+			{
+				nret += ft_printchar(format[i]); //? should I pass args as well?
+				i++;
+			}
 		}
 	va_end(args); //cleans up the variable argument list (variable with type va_list)
 	return (0);
@@ -51,7 +78,8 @@ int main()
 	char	str[] = "%sHello";
 	char	two[] = "%sbye";
 
-	ft_printf(str,two); // test results with library printf function
+	ft_printf(str,two); // test results with library printf function;
+	// printf("%sHello");
 }
 
 /*

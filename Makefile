@@ -19,7 +19,7 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -I.
 
 NAME = printf.a
-
+eee
 all: $(NAME)
 
 $(NAME): $(OBJS)

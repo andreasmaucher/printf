@@ -14,17 +14,17 @@
 
 int	ft_formatspecifier(va_list args, const char format)	// this is correct
 {
-	if (format[i] == 's') // = c
+	if (format[i] == 's') //* = c
 		ft_printstr(va_arg(args, char *); // this is correct
 	return (0);
 }
-
+//TODO
 int ft_printf(const char *format, ...)
 {
-	va_list args; // variable capable of storing a variable-length argument list
+	va_list args; //! variable capable of storing a variable-length argument list
 	int	i;
 
-	va_start(args, format); // initializes the list
+	va_start(args, format); //** initializes the list
 	i = 0;
 		while (format[i] != '\0') // this moves automatically forward in the string
 		{

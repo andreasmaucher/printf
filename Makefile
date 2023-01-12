@@ -10,18 +10,16 @@
 #                                                                              #
 # **************************************************************************** #
 
-//TODO: maybe I need to reference libft Makefile here
+NAME = ft_printf.a
 
-SRCS = printf.c printf_utils.c \
+SRCS = ft_printf.c \
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror
 
-NAME = printf.a
-eee
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -34,3 +32,5 @@ fclean: clean
 	/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY:		all clean fclean re

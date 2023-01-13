@@ -14,8 +14,8 @@
 
 int	ft_printchar(int c)
 {
-	int nret;
-	
+	int	nret;
+
 	nret = 0;
 	write(1, &c, 1);
 	nret++;
@@ -29,18 +29,18 @@ int	ft_printstr(char *str)
 
 	i = 0;
 	nret = 0;
-	if (str == NULL) // str[i] == '\0' would be wrong! handles cases where the string is invalid
+	if (str == NULL)
 	{
-		write(1, "(null)", 6);// for printf("%s", '\0'), note single quotes
+		write(1, "(null)", 6);
 		nret += 6;
-		return(nret);
+		return (nret);
 	}
 	while (str[i] != '\0')
 	{
 		write(1, &str[i], 1);
 		i++;
 	}
-	return(i);
+	return (i);
 }
 
 size_t	ft_strlen(const char *s)

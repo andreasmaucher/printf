@@ -12,18 +12,13 @@
 
 #include "ft_printf.h"
 
-static int	num_digits(int n)
+static int	ft_itoa_unsigned_num_digits(unsigned long long n)
 {
 	int	digits;
 
 	digits = 0;
 	if (n == 0)
 		digits++;
-	if (n < 0)
-	{
-		n = n * -1;
-		digits++;
-	}
 	while (n > 0)
 	{
 		n = n / 10;
@@ -32,21 +27,16 @@ static int	num_digits(int n)
 	return (digits);
 }
 
-static char	*ft_conditions(char *str, int n)
+static char	*ft_itoa_unsigned_conditions(char *str, unsigned long long n)
 {
 	int	i;
 
-	i = num_digits(n);
+	i = ft_itoa_unsigned_num_digits(n);
 	str[i--] = '\0';
 	if (n == 0)
 	{
 		str[0] = 48;
 		return (str);
-	}
-	if (n < 0)
-	{
-		str[0] = 45;
-		n *= -1;
 	}
 	while (n > 0)
 	{
@@ -57,16 +47,14 @@ static char	*ft_conditions(char *str, int n)
 	return (str);
 }
 
-char	*ft_itoa(int n)
+char	*ft_unsigned_itoa(unsigned long long n)
 {
 	int		i;
 	char	*str;
 
-	i = num_digits(n);
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+	i = ft_itoa_unsigned_num_digits(n);
 	str = malloc((sizeof(char) * (i + 1)));
 	if (str == NULL)
 		return (NULL);
-	return (ft_conditions(str, n));
+	return (ft_itoa_unsigned_conditions(str, n));
 }

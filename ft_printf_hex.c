@@ -12,61 +12,31 @@
 
 #include "ft_printf.h"
 
-static int	num_digits(int n)
+int	ft_hex(unsigned int n, char up_low)
 {
-	int	digits;
-
-	digits = 0;
-	if (n == 0)
-		digits++;
-	if (n < 0)
-	{
-		n = n * -1;
-		digits++;
-	}
-	while (n > 0)
-	{
-		n = n / 10;
-		digits++;
-	}
-	return (digits);
-}
-
-static char	*ft_conditions(char *str, int n)
-{
-	int	i;
-
-	i = num_digits(n);
-	str[i--] = '\0';
-	if (n == 0)
-	{
-		str[0] = 48;
-		return (str);
-	}
-	if (n < 0)
-	{
-		str[0] = 45;
-		n *= -1;
-	}
-	while (n > 0)
-	{
-		str[i] = 48 + (n % 10);
-		n /= 10;
-		i--;
-	}
-	return (str);
-}
-
-char	*ft_itoa(int n)
-{
+	char	*hexstr;
+	char	temp[25];
+	int		nret;
 	int		i;
-	char	*str;
 
-	i = num_digits(n);
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	str = malloc((sizeof(char) * (i + 1)));
-	if (str == NULL)
-		return (NULL);
-	return (ft_conditions(str, n));
+	nret = 0;
+	if (up_low == 'x')
+		hexstr = "0123456789abcdef";
+	else
+		hexstr = "0123456789ABCDEF";
+	if (n == 0)
+	{
+		ft_printchar('0');
+		return (nret += 1);
+	}
+	i = 0;
+	while (n != 0)
+	{
+		temp[i] = hexstr[n % 16];
+		n = n / 16;
+		i++;
+	}
+	while (i--)
+		nret += ft_printchar(temp[i]);
+	return (nret);
 }

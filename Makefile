@@ -12,7 +12,8 @@
 
 NAME	= libftprintf.a
 
-SRCS	= ft_printf.c \
+SRCS	= ft_printf.c ft_printf_hex.c ft_printf_itoa.c \
+		ft_printf_uitoa.c ft_printf_words.c ft_printf_pointer.c \
 
 OBJS	= $(SRCS:.c=.o)
 

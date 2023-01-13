@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//#include "libft.h"
 
 //** NOTE: printf returns the numbers of characters that are printed
 //** and it is a variadic function by default
@@ -25,13 +24,20 @@ int	ft_printchar(int c)
 	nret++;
 	return (nret);
 }
+
 int	ft_printstr(char *str)
 {
 	int	i;
+	int	nret;
 
 	i = 0;
-	//if (str[i] == NULL)
-	//	ft_strdup("");
+	nret = 0;
+	if (str == NULL) // str[i] == '\0' would be wrong! handles cases where the string is invalid
+	{
+		write(1, "(null)", 6);// for printf("%s", '\0'), note single quotes
+		nret += 6;
+		return(nret);
+	}
 	while (str[i] != '\0')
 	{
 		write(1, &str[i], 1);
@@ -136,10 +142,11 @@ int	ft_intdec(int n)
 
 	numstr = ft_itoa(n); // converting int to string
 	nret = ft_printstr(numstr); // writing & determing string length
+	free(numstr); // free malloc from itoa; we already wrote the string & defined length
 	return(nret);
 }
 
-static int	ft_itoa_unsigned_num_digits(int n)
+static int	ft_itoa_unsigned_num_digits(unsigned long long n)
 {
 	int	digits;
 
@@ -154,7 +161,7 @@ static int	ft_itoa_unsigned_num_digits(int n)
 	return (digits);
 }
 
-static char	*ft_itoa_unsigned_conditions(char *str, int n)
+static char	*ft_itoa_unsigned_conditions(char *str, unsigned long long n)
 {
 	int	i;
 
@@ -165,7 +172,7 @@ static char	*ft_itoa_unsigned_conditions(char *str, int n)
 		str[0] = 48;
 		return (str);
 	}
-	while (n > 0)
+	while (n > 0) //!
 	{
 		str[i] = 48 + (n % 10);
 		n /= 10;
@@ -174,7 +181,7 @@ static char	*ft_itoa_unsigned_conditions(char *str, int n)
 	return (str);
 }
 
-char	*ft_unsigned_itoa(int n)
+char	*ft_unsigned_itoa(unsigned long long  n)
 {
 	int		i;
 	char	*str;
@@ -186,15 +193,30 @@ char	*ft_unsigned_itoa(int n)
 	return (ft_itoa_unsigned_conditions(str, n));
 }
 
-int	ft_unsigned(unsigned int n)
+int	ft_unsigned(unsigned long long n)
 {
 	char	*numstr;
 	int	nret;
-
+	
+	nret = 0;
+	if (n < 0)
+		n = 4294967295 + n; //imitating printf behavior
 	numstr = ft_unsigned_itoa(n); // converting int to string
-	nret = ft_printstr(numstr); // writing & determing string length
+	nret = ft_printstr(numstr);
+	free(numstr); // writing & determing string length
 	return(nret);
 }
+
+/* int	ft_unsigned(unsigned int n)
+{
+	int	nret;
+
+	nret = 0;
+	if (n >= 10)
+		ft_unsigned(n / 10);
+	ft_printchar(n % 10 + '0');
+	return(nret);
+} */
 
 int	ft_percent(int c)
 {
@@ -206,42 +228,63 @@ int	ft_percent(int c)
 	return(i);
 }
 
-int	ft_hex(int n, char up_low)
+int	ft_hex(unsigned int n, char up_low)
 {
 	char	*hexstr;
+	char	temp[25];
 	int	nret;
+	int i;
 
 	nret = 0;
 	if (up_low == 'x')
 		hexstr = "0123456789abcdef";
 	else
 		hexstr = "0123456789ABCDEF";
-	if (n < 16)
+	if (n == 0)
 	{
-		write(1, &hexstr[n], 1);
-		nret++;
+		ft_printchar('0'); //? I can't pass n here, because of format
+		return (nret +=1 );
 	}
-	else if (n >= 16)
+	i = 0;
+	while (n != 0) //? why does it work for neg. values if it's unsigned
 	{
-		ft_hex(n / 16, up_low);
-		ft_hex(n % 16, up_low);
+		temp[i] = hexstr[n % 16]; //< 16 modulo is n; 16%16 = 0; 17%16 = 1 and so on
+		n = n / 16;
+		i++;
 	}
+	while (i--) //** we need to print backwards!
+		nret += ft_printchar(temp[i]);
 	return (nret);
 }
-/*
-int	ft_voidpointer(void *p) // prints the address at which the pointer is stored
-							// transform each byte to hexadecimal
+
+int	ft_voidpointer(uintptr_t p) // capable of s
 {
+	char	*hexstr;
+	char	temp[25];
 	int	nret;
+	int i;
 
 	nret = 0;
-	write(1, "0x", 1);
+	hexstr = "0123456789abcdef";
+	if (p == 0)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
+	write(1, "0x", 2);
 	nret += 2;
-	ft
-	
-	uintptr_t // unsigned int type that is capable of storing a data pointer
+	i = 0;
+	while (p != 0)
+	{
+		temp[i] = hexstr[p % 16];
+		p = p / 16;
+		i++;
+	}
+	while (i--)
+		nret += ft_printchar(temp[i]);
+	return (nret);
 }
-*/
+
 int	ft_formatspecifier(va_list args, const char format)
 {
 	int nret;
@@ -251,9 +294,8 @@ int	ft_formatspecifier(va_list args, const char format)
 		nret += ft_printchar(va_arg(args, int));
 	else if (format == 's')
 		nret += ft_printstr(va_arg(args, char *));
-		/*
-	else if (format == 'p') // void pointer (has no associated data type with it)
-		nret += ft_voidpointer(va_arg(args, void *)); */
+	else if (format == 'p')
+		nret += ft_voidpointer(va_arg(args, size_t));
 	else if (format == 'd' || format == 'i') // why do decimals come here as well
 		nret += ft_intdec(va_arg(args, int));
 	else if (format == 'u')
@@ -297,8 +339,10 @@ int ft_printf(const char *format, ...)
 /*
 int main()
 {
-	ft_printf("%c%s%d%i%%%u%x%X", 'z', "hello", -10, -11, 12, 11, 123456789);
-	printf("\n%c%s%d%i%%%u%x%X%p\n", 'z', "hello", -10, -11, 12, 11, 123456789, 1200); // test results with library printf function;
+	ft_printf("%p", 0);
+	//printf("\n%p %p\n", 0, 0);
+	//ft_printf("%c%s%d%i%%%u%x%X", 'z', "hello", -10, -11, -12, 11, 123456789);
+	//printf("\n%c%s%d%i%%%u%x%X\n", 'z', "hello", -10, -11, -12, 11, 123456789); // test results with library printf function;
 }
 
 void print_ints(int num, ...)

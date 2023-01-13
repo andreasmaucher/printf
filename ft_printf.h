@@ -18,6 +18,7 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 int ft_printf(const char *format, ...);
 int	ft_printstr(char *str);
@@ -28,13 +29,13 @@ static int	num_digits(int n);
 static char	*ft_conditions(char *str, int n);
 char	*ft_itoa(int n);
 int	ft_intdec(int n);
-static int	ft_itoa_unsigned_num_digits(int n);
-static char	*ft_itoa_unsigned_conditions(char *str, int n);
-char	*ft_unsigned_itoa(int n);
-int	ft_unsigned(unsigned int n);
+static int	ft_itoa_unsigned_num_digits(unsigned long long n );
+static char	*ft_itoa_unsigned_conditions(char *str, unsigned long long n);
+char	*ft_unsigned_itoa(unsigned long long n);
+int	ft_unsigned(unsigned long long n);
 int	ft_percent(int c);
-int	ft_hex(int n, char up_low);
+int	ft_hex(unsigned int n, char up_low);
 int	ft_formatspecifier(va_list args, const char format);
-
+int	ft_voidpointer(uintptr_t p);
 
 #endif

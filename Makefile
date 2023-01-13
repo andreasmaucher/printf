@@ -10,27 +10,29 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf.a
+NAME	= libftprintf.a
 
-SRCS = ft_printf.c \
+SRCS	= ft_printf.c \
 
-OBJS = $(SRCS:.c=.o)
+OBJS	= $(SRCS:.c=.o)
 
-CC = cc
-RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CC	= cc
 
-all: $(NAME)
+RM	= rm -f
 
-$(NAME): $(OBJS)
-		ar rcs $(NAME) $(OBJS)
+CFLAGS	= -Wall -Wextra -Werror
+
+all:	$(NAME)
+
+$(NAME):	$(OBJS)
+			ar rcs $(NAME) $(OBJS)
 
 clean:
-	/bin/rm -f $(OBJS)
+			$(RM) $(OBJS)
 
-fclean: clean
-	/bin/rm -f $(NAME)
+fclean:		clean
+			$(RM) $(NAME)
 
-re: fclean all
+re:			fclean all
 
 .PHONY:		all clean fclean re

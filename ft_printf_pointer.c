@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_voidpointer(uintptr_t p)
+void	ft_voidpointer(uintptr_t p)
 {
 	char	*hexstr;
 	char	temp[25];

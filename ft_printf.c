@@ -23,7 +23,7 @@ int	ft_intdec(int n)
 	return (nret);
 }
 
-int	ft_unsigned(unsigned long long n)
+int	ft_unsigned(unsigned int n)
 {
 	char	*numstr;
 	int		nret;
@@ -97,11 +97,14 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (nret);
 }
-/*
+
 int main()
 {
-	ft_printf("%c%s%d%i%%%u%x%X%p", 'z', "hello", -10, -11, -12, 11, 123456789, 0);
-	printf("\n%c%s%d%i%%%u%x%X%p\n", 'z', "hello", -10, -11, -12, 11, 123456789, 0);
+	//ft_printf("%c%s%d%i%%%u%x%X%p", 'z', "hello", -10, -11, -12, 11, -1, 1);
+	//printf("\n%c%s%d%i%%%u%x%X%p\n", 'z', "hello", -10, -11, -12, 11, -1, 1);
+	//ft_printf("%u", -10000);
+	//printf("\n%u\n", -10000);
+	ft_printf("%p", -10000);
+	printf("\n%p\n", -10000);
 }
-*/
 

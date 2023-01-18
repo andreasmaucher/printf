@@ -24,7 +24,7 @@ int		ft_printf(const char *format, ...);
 int		ft_printstr(char *str);
 int		ft_printchar(int c);
 int		ft_intdec(int n);
-int		ft_unsigned(unsigned long long n);
+int		ft_unsigned(unsigned n);
 int		ft_percent(int c);
 int		ft_hex(unsigned int n, char up_low);
 int		ft_formatspecifier(va_list args, const char format);

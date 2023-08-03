@@ -24,7 +24,6 @@ int		ft_printf(const char *format, ...);
 int		ft_printstr(char *str);
 int		ft_printchar(int c);
 int		ft_intdec(int n);
-int		ft_unsigned(unsigned n);
 int		ft_percent(int c);
 int		ft_hex(unsigned int n, char up_low);
 int		ft_formatspecifier(va_list args, const char format);
@@ -33,5 +32,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
 char	*ft_itoa(int n);
 char	*ft_unsigned_itoa(unsigned long long n);
+//int		ft_unsigned(unsigned n);
 
 #endif

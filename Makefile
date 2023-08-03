@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libftprintf.a
+NAME	= ft_printf.a
 
 SRCS	= ft_printf.c ft_printf_hex.c ft_printf_itoa.c \
 		ft_printf_uitoa.c ft_printf_words.c ft_printf_pointer.c \

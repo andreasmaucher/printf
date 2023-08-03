@@ -61,7 +61,7 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	len = ft_strlen((char *)s);
-	duplicate = (char *)malloc(sizeof(char) * (len + 1));
+	duplicate = malloc(sizeof(char) * (len + 1));
 	if (!duplicate)
 		return (NULL);
 	while (s[i] != '\0')
